@@ -1,4 +1,4 @@
-# LaTeX
+# Language Server LaTeX
 
 ## Structure
 
