@@ -1,0 +1,180 @@
+{
+  "name": "latex",
+  "displayName": "LaTeX",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:LaTeX"
+  ],
+  "main": "./client/out/extension",
+  "contributes": {
+    "notebooks": [
+        {
+            "type": "equation-notebook",
+            "displayName": "Equation Notebook",
+            "selector": [
+                {
+                    "filenamePattern": "*.eq"
+                }
+            ]
+        }
+    ],
+    "configuration": [
+      {
+        "id": "LaTeX",
+        "type": "object",
+        "title": "LaTeX",
+        "properties": {
+          "latex.maxNumberOfProblems": {
+            "scope": "resource",
+            "type": "number",
+            "default": 100,
+            "description": "Controls the maximum number of problems produced by the server."
+          },
+          "latex.trace.server": {
+            "scope": "window",
+            "type": "string",
+            "enum": [
+              "off",
+              "messages",
+              "verbose"
+            ],
+            "default": "off",
+            "description": "Traces the communication between VS Code and the language server."
+          },
+          "latex.commandsCompile": {
+            "type": "object",
+            "default": {
+              "simple": "pdflatex main.pdf"
+            },
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "List of commands to compile files"
+          },
+          "latex.completion.frequentWords": {
+            "type": "boolean",
+            "default": true,
+            "description": "Auto complete for frequently used words in the current file."
+          },
+          "latex.completion.commands": {
+            "type": "boolean",
+            "default": true,
+            "description": "Auto complete for commands provided by Tex packages."
+          },
+          "latex.symbol.outline": {
+            "type": "boolean",
+            "default": true,
+            "description": "Create outline tree."
+          },
+          "latex.codelens": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show label command references used in ref, hyperref, ..."
+          },
+          "latex.hover": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the references of the commands used and marked in the file"
+          }
+        }
+      }
+    ],
+    "languages": [
+      {
+        "id": "LaTeX",
+        "extensions": [
+          ".tex",
+          ".Rtex"
+        ],
+        "aliases": [
+          "LaTeX",
+          "latex",
+          "tex"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/tex.svg",
+          "dark": "./icons/tex.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "LaTeX",
+        "scopeName": "source.tex",
+        "path": "./syntaxes/tex.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "LaTeX",
+        "path": "./snippets/snippets.code-snippets"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == LaTeX",
+          "command": "LaTeX.commandCompile",
+          "alt": "LaTeX.commandCompile",
+          "group": "navigation"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "when": "resourceLangId == LaTeX",
+        "command": "LaTeX.findReferences",
+        "title": "Find References"
+      },
+      {
+        "when": "resourceLangId == LaTeX",
+        "command": "LaTeX.commandCompile",
+        "title": "Command compile",
+        "icon": "$(notebook-execute)"
+      }
+    ],
+    "keybindings": [
+      {
+        "when": "resourceLangId == LaTeX",
+        "command": "LaTeX.commandCompile",
+        "key": "f5",
+        "mac": "f5"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run webpack",
+    "webpack": "npm run clean && webpack --mode production --config ./client/webpack.config.js && webpack --mode production --config ./server/webpack.config.js",
+    "webpack:dev": "npm run clean && webpack --mode none --config ./client/webpack.config.js && webpack --mode none --config ./server/webpack.config.js",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w",
+    "lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+    "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+    "test": "vscode-test",
+    "clean": ""
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^8.57.0",
+    "merge-options": "^3.0.4",
+    "mocha": "^10.3.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "vscode-uri": "^3.0.8"
+  }
+}

@@ -1,0 +1,326 @@
+{
+    "name": "LaTeX",
+    "patterns": [
+        {
+            "begin": "(<<)(.*?)(>>)(=)",
+            "beginCaptures": {
+                "1": { "name": "punctuation.definition.open" },
+                "3": { "name": "punctuation.definition.close" },
+                "4": { "name": "punctuation.paren.open" }
+            },
+            "contentName": "source.r",
+            "end": "(@)",
+            "endCaptures": {
+                "1": { "name": "punctuation.paren.close" }
+            },
+            "patterns": [
+                {
+                    "include": "source.r"
+                }
+            ]
+        },
+        {
+            "begin": "(\\\\)(begin)(\\{)(sagesilent|python|sage|sageblock|py)(\\})",
+            "beginCaptures": {
+                "1": { "name": "support.function.general" },
+                "2": { "name": "support.function.general" },
+                "3": { "name": "punctuation.definition.arguments.begin" },
+                "4": { "name": "constant.character" },
+                "5": { "name": "punctuation.definition.arguments.end" }
+            },
+            "contentName": "source.python",
+            "end": "(\\\\)(end)(\\{)(sagesilent|python|sage|sageblock|py)(\\})",
+            "endCaptures": {
+                "1": { "name": "support.function.general" },
+                "2": { "name": "support.function.general" },
+                "3": { "name": "punctuation.definition.arguments.begin" },
+                "4": { "name": "constant.character" },
+                "5": { "name": "punctuation.definition.arguments.end" }
+            },
+            "patterns": [
+                {
+                    "include": "source.python"
+                }
+            ]
+        },
+        {
+            "begin": "(\\\\)(begin)(\\{)(lstlisting)(\\})",
+            "beginCaptures": {
+                "1": { "name": "support.function.general" },
+                "2": { "name": "support.function.general" },
+                "3": { "name": "punctuation.definition.arguments.begin" },
+                "4": { "name": "constant.character" },
+                "5": { "name": "punctuation.definition.arguments.end" }
+            },
+            "contentName": "string.quoted.triple",
+            "end": "(\\\\)(end)(\\{)(lstlisting)(\\})",
+            "endCaptures": {
+                "1": { "name": "support.function.general" },
+                "2": { "name": "support.function.general" },
+                "3": { "name": "punctuation.definition.arguments.begin" },
+                "4": { "name": "constant.character" },
+                "5": { "name": "punctuation.definition.arguments.end" }
+            }
+        },
+        {
+            "begin": "(\\\\)(sagesilent|python|sage|py|sageplot)\\b(\\[)?",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control"
+                },
+                "2": {
+                    "name": "keyword.control"
+                },
+                "3": {
+                    "name": "punctuation.definition.arguments.begin"
+                }
+            },
+            "end": "(?<=\\})",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.arguments.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                },
+                {
+                    "begin": "(\\G|(\\]))(\\{)",
+                    "beginCaptures": {
+                        "2": {
+                            "name": "punctuation.definition.arguments.end"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.arguments.begin"
+                        }
+                    },
+                    "contentName": "source.python",
+                    "end": "(\\})",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.arguments.end"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "source.python"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "captures": {
+                "0": {
+                    "name": "string.quoted.triple"
+                }
+            },
+            "match": "(?<=(?:\\\\)(?:renewcommand|renewcommand\\*|newcommand|newcommand\\*)\\{).*?(?=\\})"
+        },
+        {
+            "begin": "(\\\\)(usepackage|documentclass|label)\\b(\\[)?",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control"
+                },
+                "2": {
+                    "name": "keyword.control"
+                },
+                "3": {
+                    "name": "punctuation.definition.arguments.begin"
+                }
+            },
+            "name": "meta.embedded",
+            "contentName": "constant.character",
+            "end": "(?<=\\})",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.arguments.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "$self"
+                },
+                {
+                    "begin": "(\\G|(\\]))(\\{)",
+                    "beginCaptures": {
+                        "2": {
+                            "name": "punctuation.definition.arguments.end"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.arguments.begin"
+                        }
+                    },
+                    "contentName": "support.class",
+                    "end": "(\\})",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.arguments.end"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "captures": {
+                "0": {
+                    "name": "constant.character"
+                }
+            },
+            "match": "(?<=(?:\\\\)(?:begin|end|input|include)\\{).*?(?=\\})",
+            "name": "meta.embedded"
+        },
+        { "include": "#comment" }, 
+        { "include": "#math" },
+        { "include": "#command" },
+        {
+            "captures": {
+                "1": {
+                    "name": "keyword.control"
+                },
+                "2": {
+                    "name": "keyword.control"
+                }
+            },
+            "match": "(\\\\)(.?)"
+        }
+    ],
+    "repository": {
+        "comment": {
+            "patterns": [
+                {
+                    "begin": "(\\\\)(begin)(\\{)(comment)(\\})",
+                    "end": "(\\\\)(end)(\\{(comment)\\})",
+                    "name": "comment.block"
+                },
+                {
+                    "begin": "(^[ \\t]+)?(?<!\\\\)(?=%)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.whitespace.comment.leading.tex"
+                        }
+                    },
+                    "end": "(?!\\G)",
+                    "patterns": [
+                        {
+                            "begin": "%:?",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.definition.comment.tex"
+                                }
+                            },
+                            "end": "$\\n?",
+                            "name": "comment.line.percentage.tex"
+                        },
+                        {
+                            "begin": "^(%!TEX) (\\S*) =",
+                            "beginCaptures": {
+                                "1": {
+                                    "name": "punctuation.definition.comment.tex"
+                                }
+                            },
+                            "end": "$\\n?",
+                            "name": "comment.line.percentage.directive.tex"
+                        }
+                    ]
+                }
+            ]
+        },
+        "command": {
+            "begin": "(\\\\)([\\w]+)\\b(\\[|\\{)?",
+            "end": "(\\]|\\})?",
+            "beginCaptures": {
+                "1": { "name": "support.function.general" },
+                "2": { "name": "support.function.general" },
+                "3": { "name": "punctuation.definition.arguments.begin" }
+            },
+            "endCaptures": {
+                "1": { "name": "punctuation.definition.arguments.end" }
+            },
+            "contentName": "meta.function",
+            "patterns": [
+                { "include": "$self" }
+            ]
+        },
+        "math": {
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.newline"
+                        }
+                    },
+                    "comment": "new line",
+                    "match": "(\\\\\\\\)"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.marker"
+                        }
+                    },
+                    "comment": "alignment marker",
+                    "match": "(&)"
+                },
+                {
+                    "begin": "(?<!\\\\)(\\$)",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "string.quoted.triple"
+                        }
+                    },
+                    "end": "(?<!\\\\)(\\$)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "string.quoted.triple"
+                        }
+                    },
+                    "contentName": "string.quoted.triple",
+                    "patterns": [
+                        {
+                            "include": "#math"
+                        },
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(\\\\)(begin)(\\{)(equation|equation\\*)(\\})",
+                    "beginCaptures": {
+                        "1": { "name": "support.function.general" },
+                        "2": { "name": "support.function.general" },
+                        "3": { "name": "punctuation.definition.arguments.begin" },
+                        "4": { "name": "constant.character" },
+                        "5": { "name": "punctuation.definition.arguments.end" }
+                    },
+                    "contentName": "string.quoted.triple",
+                    "end": "(\\\\)(end)(\\{)(equation|equation\\*)(\\})",
+                    "endCaptures": {
+                        "1": { "name": "support.function.general" },
+                        "2": { "name": "support.function.general" },
+                        "3": { "name": "punctuation.definition.arguments.begin" },
+                        "4": { "name": "constant.character" },
+                        "5": { "name": "punctuation.definition.arguments.end" }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#math"
+                        },
+                        {
+                            "include": "$self"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "scopeName": "source.tex"
+}

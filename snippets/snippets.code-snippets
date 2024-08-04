@@ -1,0 +1,67 @@
+{
+    "LaTeX Blank": {
+        "prefix": ["latex:blank"],
+        "body": [
+            "\\documentclass{article}",
+            "",
+            "% Language setting",
+            "\\usepackage[brazil]{babel}",
+            "",
+            "\\usepackage[a4paper]{geometry}",
+            "",
+            "% Useful packages",
+            "\\usepackage{amsmath}",
+            "\\usepackage{graphicx}",
+            "\\usepackage[colorlinks=true, allcolors=blue]{hyperref}",
+            "",
+            "\\title{$WORKSPACE_FOLDER}",
+            "\\author{${2:You}}",
+            "\\date{$CURRENT_MONTH_NAME $CURRENT_YEAR}",
+            "",
+            "\\begin{document}",
+            "\\maketitle",
+            "",
+            "\\begin{abstract}",
+            "Your abstract.",
+            "\\end{abstract}",
+            "",
+            "\\section{Introduction}",
+            "",
+            "$0",
+            "",
+            "\\bibliographystyle{alpha}",
+            "\\bibliography{sample}",
+            "",
+            "\\end{document}"
+        ],
+        "description": "Blank coding latex"
+    },
+    "Figure": {
+        "prefix": ["latex:figure"],
+        "body": [
+            "\\begin{figure}",
+            "\\centering",
+            "\\includegraphics[$2]{$1}",
+            "\\caption{$3}",
+            "\\end{figure}",
+        ],
+        "description": "Create figure"
+    },
+    "BeginEnd": {
+        "prefix": "\\begin{} ...",
+        "body": [
+            "\\begin{$1}",
+            "$0",
+            "\\end{$1}"
+        ],
+        "description": "Create begin and end struct"
+    },
+    "knitr": {
+        "prefix": "knitr",
+        "body": [
+            "<<$1>>=",
+            "$0",
+            "@"
+        ]   
+    }
+}
